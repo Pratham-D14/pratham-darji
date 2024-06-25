@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const projectSchema = new mongoose.Schema({
   projectName: {
     type: String,
-    require: true,
+    required: true,
     validate: {
       validator: async function (projectName) {
         const checkProjectName = await this.constructor.findOne({
@@ -17,23 +17,23 @@ const projectSchema = new mongoose.Schema({
   },
   imageUrl: {
     type: String,
-    require: true,
+    required: true,
   },
   projectType: {
     type: String,
-    require: true,
+    required: true,
   },
   resourceUsed: {
     type: String,
-    require: true,
+    required: true,
   },
   description: {
     type: String,
-    require: true,
+    required: true,
   },
   projectLink: {
     type: String,
-    require: true,
+    required: true,
   },
 });
 

@@ -41,3 +41,12 @@ exports.registerUser = async (req, res) => {
     res.status(400).send(error);
   }
 };
+
+exports.loginUser = async (req, res) => {
+  const { username, password } = req.body;
+  try {
+    const user = await userSchema.findOne({ username, password });
+  } catch (error) {
+    console.log(error);
+  }
+};

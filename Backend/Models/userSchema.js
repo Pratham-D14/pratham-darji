@@ -5,11 +5,11 @@ const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      require: true,
+      required: true,
     },
     email: {
       type: String,
-      require: true,
+      required: true,
       validate: {
         validator: async function (email) {
           const checkEmail = await this.constructor.findOne({ email });
@@ -20,11 +20,11 @@ const userSchema = new mongoose.Schema(
     },
     phone: {
       type: Number,
-      require: true,
+      required: true,
     },
     username: {
       type: String,
-      require: true,
+      required: true,
       unique: true,
       validate: {
         validator: async function (username) {
@@ -36,7 +36,7 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      require: true,
+      required: true,
     },
     accessToken: {
       type: String,

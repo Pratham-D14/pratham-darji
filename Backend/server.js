@@ -1,6 +1,7 @@
 const express = require("express");
 const personalInfoDb = require("./Config/personalInfoDbConnection");
 const cors = require("cors");
+const userMiddleware = require("./Middleware/userMiddleware");
 
 // Importing Routers
 const userRoute = require("./Routers/userRouter");
@@ -12,6 +13,9 @@ let app = express();
 app.use(express.json());
 app.use(cors());
 personalInfoDb();
+
+// Middleware
+app.use(userMiddleware);
 
 // User Router
 app.use("/api/users", userRoute);
