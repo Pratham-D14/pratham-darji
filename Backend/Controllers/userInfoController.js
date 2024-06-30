@@ -2,6 +2,7 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const userSchema = require("../Models/userSchema");
+const userMiddleware = require("../Middleware/userMiddleware");
 
 let app = express();
 app.use(express.json());
@@ -42,11 +43,15 @@ exports.registerUser = async (req, res) => {
   }
 };
 
-exports.loginUser = async (req, res) => {
+// app.use(userMiddleware);
+
+exports.loginUser = async (req, res, userMiddleware) => {
   const { username, password } = req.body;
   try {
     const user = await userSchema.findOne({ username, password });
+    res.status(200).send("User Logged in Successfully");
   } catch (error) {
-    console.log(error);
+    res.send(error);
+    // console.log(error);
   }
 };
