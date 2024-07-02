@@ -1,19 +1,33 @@
-const mongoose = require("mongoose");
 const userSchema = require("../Models/userSchema");
+const bcrypt = require("bcrypt");
 
 // Creating Middleware to check user authentication
-userMiddleware = async (req, res, next) => {
-  console.log("middleware connected");
+exports.userMiddleware = async (req, res, next) => {
+  console.log("usermiddleware connected");
   let { username, password } = req.body;
 
-  let user = await userSchema.findOne({ username });
+  try {
+    let user = await userSchema.findOne({ username });
 
-  if (user.password == password) {
-    console.log("User Authenticated Successfully");
+    if (!user) {
+      return res.status(401).json({
+        error: "Authentication failed! Please enter valid username",
+      });
+    }
+    console.log("Username Matched Successfully");
+
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwordMatch) {
+      return res.status(401).json({
+        error: "Authentication failed! Please enter valid password",
+      });
+    }
+    console.log("password Matched Successfully");
+
     next();
-  } else {
-    res.status(400).send("Please enter valid credential");
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: "Login Failed" });
   }
 };
-
-module.exports = userMiddleware;
